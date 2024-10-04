@@ -1,15 +1,24 @@
 package pt.com.wesleywesp.Screenmatch.model;
 
 
+import jakarta.persistence.*;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
-
+@Entity
+@Table(name ="episodios")
 public class Episodios {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Integer temporada;
     private String titulo;
     private Integer episodioNumero;
     private LocalDate dataDeLancamento;
     private Double avaliacao;
+
+    @ManyToOne
+    private Serie serie;
 
     public Episodios(Integer numeroTemporada, DadosEpisodios dadosEpisodio) {
         this.temporada = numeroTemporada;
@@ -30,6 +39,27 @@ public class Episodios {
         }catch (DateTimeException ex) {
             this.dataDeLancamento = null;
         }
+    }
+    public Episodios(){}
+
+    public Serie getSerie() {
+        return serie;
+    }
+
+    public void setSerie(Serie serie) {
+        this.serie = serie;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setDataDeLancamento(LocalDate dataDeLancamento) {
+        this.dataDeLancamento = dataDeLancamento;
     }
 
     public Integer getTemporada() {
